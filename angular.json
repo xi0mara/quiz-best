@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "quiz-spa": {
+    "quiz-best": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "quiz-spa:build:production"
+              "buildTarget": "quiz-best:build:production"
             },
             "development": {
-              "buildTarget": "quiz-spa:build:development"
+              "buildTarget": "quiz-best:build:development"
             }
           },
           "defaultConfiguration": "development"

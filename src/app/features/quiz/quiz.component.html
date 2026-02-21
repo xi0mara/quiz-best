@@ -1,0 +1,113 @@
+<div class="page">
+  <header class="topbar">
+    <div class="brand">QUIZ</div>
+
+    <div class="progress" *ngIf="state !== 'loading' && state !== 'error'">
+      <div class="progress__meta">
+        <span>Round {{ roundNumber }} · {{ answeredQuestions }}/{{ totalQuestions }}</span>
+        <span class="timer" *ngIf="state === 'playing'">⏱ {{ timeLeft }}s</span>        
+      </div>
+
+      <div class="progress__bar">
+        <div class="progress__fill" [style.width.%]="globalProgressPct"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- LOADING -->
+  <main class="container" *ngIf="state === 'loading'">
+    <div class="card">Cargando banco de preguntas...</div>
+  </main>
+
+  <!-- ERROR -->
+  <main class="container" *ngIf="state === 'error'">
+    <div class="card error">
+      <h2>Ups</h2>
+      <p>{{ errorMsg }}</p>
+    </div>
+  </main>
+
+  <!-- QUIZ -->
+  <main class="container" *ngIf="state === 'playing' || state === 'answered'">
+    <div class="card question">
+      <h1>{{ q.text }}</h1>
+      <p class="sub">
+        Round: {{ inRoundNumber }}/{{ roundQuestions.length }} · Pregunta global:
+        {{ answeredQuestions + (state === 'playing' ? 1 : 0) }}/{{ totalQuestions }}
+      </p>
+    </div>
+
+    <div class="grid">
+      <button
+        class="opt"
+        *ngFor="let opt of q.options"
+        [disabled]="state !== 'playing'"
+        (click)="answer(opt.id)"
+        [class]="'opt opt--' + opt.id.toLowerCase() + ' ' + optionClass(opt.id)"
+      >
+        <span class="opt__label">{{ opt.id }}</span>
+        <span class="opt__text">{{ opt.text }}</span>
+      </button>
+    </div>
+
+    <div class="footer" *ngIf="state === 'answered'">
+      <div class="result" [class.ok]="isCorrect" [class.bad]="isCorrect === false">
+        <span>{{ isCorrect ? '✅ Correcto' : '❌ Incorrecto' }}</span>
+        <small>Correcta: <b>{{ q.correctOptionIds.join(', ') }}</b></small>
+        <small *ngIf="q.reason">Explicación: <span class="reason">{{ q.reason }}</span></small>
+      </div>
+
+      <button class="next" (click)="nextQuestionOrSummary()">
+        {{ inRoundNumber < roundQuestions.length ? 'Siguiente' : 'Ver resumen del round' }}
+      </button>
+    </div>
+  </main>
+
+  <!-- RESUMEN DEL ROUND -->
+  <main class="container" *ngIf="state === 'roundSummary'">
+    <div class="card end">
+      <h2>Resumen del round ({{ roundAnswers.length }}/{{ roundSize }})</h2>
+      <p>✅ Correctas: <b>{{ correctTotal }}</b> · ❌ Erradas: <b>{{ wrongTotal }}</b></p>
+      <p>Avance: <b>{{ answeredQuestions }}</b> / {{ totalQuestions }} ({{ globalProgressPct }}%)</p>
+
+      <div class="summary">
+        <div class="summary__item" *ngFor="let item of roundAnswers; let i = index">
+          <div class="summary__q">
+            <b>{{ i + 1 }}.</b> {{ item.q.text }}
+          </div>
+
+          <div class="summary__a" [class.ok]="item.isCorrect" [class.bad]="!item.isCorrect">
+            <div><b>Marcaste:</b> {{ labelForOption(item.q, item.selectedId) }}</div>
+            <div><b>Correcta:</b> {{ correctLabels(item.q) }}</div>
+          </div>
+
+          <div class="summary__reason" *ngIf="item.q.reason">
+            <b>Reason:</b> {{ item.q.reason }}
+          </div>
+        </div>
+      </div>
+
+      <div class="summary__actions">
+        <button class="next" (click)="continueNextRound()" [disabled]="answeredQuestions >= totalQuestions">
+          Continuar (otras {{ roundSize }})
+        </button>
+
+        <button class="ghost" (click)="restartAll()">Reiniciar todo</button>
+      </div>
+
+      <p class="hint" *ngIf="answeredQuestions >= totalQuestions">
+        Ya se terminaron todas las preguntas.
+      </p>
+    </div>
+  </main>
+
+  <!-- FINISH -->
+  <main class="container" *ngIf="state === 'finished'">
+    <div class="card end">
+      <h2>Fin ✅</h2>
+      <p>✅ Correctas: <b>{{ correctTotal }}</b></p>
+      <p>❌ Erradas: <b>{{ wrongTotal }}</b></p>
+      <button class="next" (click)="restartAll()">Jugar de nuevo</button>
+    </div>
+  </main>
+</div>
