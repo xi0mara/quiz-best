@@ -1,13 +1,11 @@
 <div class="page">
   <header class="topbar">
-    <div class="brand">QUIZ</div>
-
+    <div class="brand">Tavito ♥</div>
     <div class="progress" *ngIf="state !== 'loading' && state !== 'error'">
       <div class="progress__meta">
         <span>Round {{ roundNumber }} · {{ answeredQuestions }}/{{ totalQuestions }}</span>
-        <span class="timer" *ngIf="state === 'playing'">⏱ {{ timeLeft }}s</span>        
+        <span class="timer" *ngIf="state === 'playing'">⏱ {{ timeLeft }}s</span>
       </div>
-
       <div class="progress__bar">
         <div class="progress__fill" [style.width.%]="globalProgressPct"></div>
       </div>
@@ -29,20 +27,44 @@
 
   <!-- QUIZ -->
   <main class="container" *ngIf="state === 'playing' || state === 'answered'">
+
     <div class="card question">
+      <p class="question__type">
+        {{ q.type | uppercase }}
+        <span class="question__type-hint" *ngIf="isMultiple"> — selecciona todas las correctas</span>
+      </p>
       <h1>{{ q.text }}</h1>
+
+      <!-- Imágenes de la pregunta -->
+      <div class="question__images" *ngIf="q.images && q.images.length">
+        <img
+          *ngFor="let img of q.images"
+          [src]="img.path"
+          [alt]="'Imagen de la pregunta ' + q.id"
+          class="question__img"
+        />
+      </div>
+
+      <p class="question__img-hint" *ngIf="q.optionsInImage">
+        📌 Las opciones están en la imagen de arriba. Selecciona la letra correcta:
+      </p>
+
       <p class="sub">
         Round: {{ inRoundNumber }}/{{ roundQuestions.length }} · Pregunta global:
         {{ answeredQuestions + (state === 'playing' ? 1 : 0) }}/{{ totalQuestions }}
       </p>
+
+      <p class="sub">
+        Pregunta {{ q.number }} / Banco
+      </p>
     </div>
 
-    <div class="grid">
+    <!-- ── Opciones SINGLE / TORF (botón directo) ── -->
+    <div class="grid" *ngIf="!isMultiple && !q.optionsInImage && q.options.length">
       <button
-        class="opt"
         *ngFor="let opt of q.options"
         [disabled]="state !== 'playing'"
-        (click)="answer(opt.id)"
+        (click)="toggleOption(opt.id)"
         [class]="'opt opt--' + opt.id.toLowerCase() + ' ' + optionClass(opt.id)"
       >
         <span class="opt__label">{{ opt.id }}</span>
@@ -50,64 +72,187 @@
       </button>
     </div>
 
+    <!-- ── Opciones MULTIPLE (checkboxes) ── -->
+    <div class="grid" *ngIf="isMultiple && !q.optionsInImage && q.options.length">
+      <button
+        *ngFor="let opt of q.options"
+        [disabled]="state !== 'playing'"
+        (click)="toggleOption(opt.id)"
+        [class]="'opt opt--multi opt--' + opt.id.toLowerCase() + ' ' + optionClass(opt.id)"
+      >
+        <!-- Checkbox visual -->
+        <span class="opt__check" [class.opt__check--on]="isSelected(opt.id)">
+          <svg *ngIf="isSelected(opt.id)" viewBox="0 0 12 12" width="12" height="12">
+            <path d="M1.5 6L4.5 9L10.5 3" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </span>
+        <span class="opt__label">{{ opt.id }}</span>
+        <span class="opt__text">{{ opt.text }}</span>
+      </button>
+    </div>
+
+    <!-- ── Opciones como letras cuando están en imagen ── -->
+    <div class="grid grid--letters" *ngIf="q.optionsInImage">
+      <button
+        *ngFor="let letter of ['A','B','C','D']"
+        [disabled]="state !== 'playing'"
+        (click)="toggleOption(letter)"
+        [class]="'opt opt--' + letter.toLowerCase() + ' ' + optionClass(letter)"
+      >
+        <span class="opt__label">{{ letter }}</span>
+      </button>
+    </div>
+
+    <!-- ── Botón confirmar (solo para múltiple, mientras juega) ── -->
+    <div class="confirm-row" *ngIf="isMultiple && state === 'playing'">
+      <button
+        class="next confirm-btn"
+        [disabled]="selectedIds.length === 0"
+        (click)="confirmAnswer()"
+      >
+        Confirmar respuesta ({{ selectedIds.length }} seleccionada{{ selectedIds.length !== 1 ? 's' : '' }})
+      </button>
+    </div>
+
+    <!-- ── Footer resultado ── -->
     <div class="footer" *ngIf="state === 'answered'">
       <div class="result" [class.ok]="isCorrect" [class.bad]="isCorrect === false">
         <span>{{ isCorrect ? '✅ Correcto' : '❌ Incorrecto' }}</span>
         <small>Correcta: <b>{{ q.correctOptionIds.join(', ') }}</b></small>
         <small *ngIf="q.reason">Explicación: <span class="reason">{{ q.reason }}</span></small>
       </div>
-
       <button class="next" (click)="nextQuestionOrSummary()">
         {{ inRoundNumber < roundQuestions.length ? 'Siguiente' : 'Ver resumen del round' }}
       </button>
     </div>
+
   </main>
 
   <!-- RESUMEN DEL ROUND -->
   <main class="container" *ngIf="state === 'roundSummary'">
     <div class="card end">
-      <h2>Resumen del round ({{ roundAnswers.length }}/{{ roundSize }})</h2>
-      <p>✅ Correctas: <b>{{ correctTotal }}</b> · ❌ Erradas: <b>{{ wrongTotal }}</b></p>
-      <p>Avance: <b>{{ answeredQuestions }}</b> / {{ totalQuestions }} ({{ globalProgressPct }}%)</p>
 
+      <h2>Resumen del round {{ roundNumber }}</h2>
+
+      <!-- Mensaje motivacional -->
+      <div class="motivational" [class]="'motivational ' + motivationalClass">
+        {{ motivationalMessage }}
+      </div>
+
+      <!-- Métricas del round -->
+      <div class="score-row">
+        <div class="score-box score-box--ok">
+          <span class="score-box__num">{{ roundScore }}</span>
+          <span class="score-box__lbl">Correctas</span>
+        </div>
+        <div class="score-box score-box--bad">
+          <span class="score-box__num">{{ roundAnswers.length - roundScore }}</span>
+          <span class="score-box__lbl">Erradas</span>
+        </div>
+        <div class="score-box score-box--time">
+          <span class="score-box__num">{{ roundTimeFormatted }}</span>
+          <span class="score-box__lbl">Tiempo ronda</span>
+        </div>
+      </div>
+
+      <p class="progress-line">
+        {{ answeredQuestions }} / {{ totalQuestions }} preguntas respondidas
+        ({{ globalProgressPct }}% del total)
+      </p>
+
+      <!-- Detalle de respuestas -->
       <div class="summary">
         <div class="summary__item" *ngFor="let item of roundAnswers; let i = index">
+
           <div class="summary__q">
+            <span class="summary__badge" [class.badge--multi]="item.q.type === 'multiple'">
+              {{ item.q.type | uppercase }}
+            </span>
             <b>{{ i + 1 }}.</b> {{ item.q.text }}
           </div>
 
+          <div class="summary__images" *ngIf="item.q.images && item.q.images.length">
+            <img
+              *ngFor="let img of item.q.images"
+              [src]="img.path"
+              [alt]="'Imagen de ' + item.q.id"
+              class="summary__img"
+            />
+          </div>
+
           <div class="summary__a" [class.ok]="item.isCorrect" [class.bad]="!item.isCorrect">
-            <div><b>Marcaste:</b> {{ labelForOption(item.q, item.selectedId) }}</div>
+            <div><b>Marcaste:</b> {{ labelForOptions(item.q, item.selectedIds) }}</div>
             <div><b>Correcta:</b> {{ correctLabels(item.q) }}</div>
           </div>
 
           <div class="summary__reason" *ngIf="item.q.reason">
             <b>Reason:</b> {{ item.q.reason }}
           </div>
+
         </div>
       </div>
 
       <div class="summary__actions">
-        <button class="next" (click)="continueNextRound()" [disabled]="answeredQuestions >= totalQuestions">
+        <button
+          class="next"
+          (click)="continueNextRound()"
+          [disabled]="answeredQuestions >= totalQuestions"
+        >
           Continuar (otras {{ roundSize }})
         </button>
-
         <button class="ghost" (click)="restartAll()">Reiniciar todo</button>
       </div>
 
       <p class="hint" *ngIf="answeredQuestions >= totalQuestions">
         Ya se terminaron todas las preguntas.
       </p>
+
     </div>
   </main>
 
   <!-- FINISH -->
   <main class="container" *ngIf="state === 'finished'">
-    <div class="card end">
-      <h2>Fin ✅</h2>
-      <p>✅ Correctas: <b>{{ correctTotal }}</b></p>
-      <p>❌ Erradas: <b>{{ wrongTotal }}</b></p>
-      <button class="next" (click)="restartAll()">Jugar de nuevo</button>
+    <div class="card end finish">
+
+      <div class="finish__trophy">🏆</div>
+      <h2>¡Examen completado!</h2>
+
+      <div class="finish__score">
+        <span class="finish__score-num">{{ score }}</span>
+        <span class="finish__score-den">/ {{ totalQuestions }}</span>
+      </div>
+      <p class="finish__score-label">Puntaje final</p>
+
+      <div class="finish__metrics">
+        <div class="finish__metric">
+          <span class="finish__metric-icon">✅</span>
+          <span class="finish__metric-val">{{ correctTotal }}</span>
+          <span class="finish__metric-lbl">Correctas</span>
+        </div>
+        <div class="finish__metric">
+          <span class="finish__metric-icon">❌</span>
+          <span class="finish__metric-val">{{ wrongTotal }}</span>
+          <span class="finish__metric-lbl">Erradas</span>
+        </div>
+        <div class="finish__metric">
+          <span class="finish__metric-icon">🎯</span>
+          <span class="finish__metric-val">{{ scorePct }}%</span>
+          <span class="finish__metric-lbl">Aciertos</span>
+        </div>
+        <div class="finish__metric finish__metric--highlight">
+          <span class="finish__metric-icon">⏱</span>
+          <span class="finish__metric-val">{{ sessionTimeFormatted }}</span>
+          <span class="finish__metric-lbl">Tiempo total</span>
+        </div>
+      </div>
+
+      <p class="finish__msg" *ngIf="scorePct >= 80">🌟 ¡Excelente resultado! Estás listo para el examen.</p>
+      <p class="finish__msg" *ngIf="scorePct >= 60 && scorePct < 80">👍 Buen resultado. Repasa los temas donde fallaste.</p>
+      <p class="finish__msg" *ngIf="scorePct < 60">📚 Sigue practicando. ¡Puedes mejorar!</p>
+
+      <button class="next" (click)="restartAll()">Volver a empezar</button>
+
     </div>
   </main>
 </div>
