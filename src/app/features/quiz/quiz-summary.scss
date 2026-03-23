@@ -1,0 +1,82 @@
+// ── Summary ───────────────────────────────────────────────────────────────────
+
+.summary {
+  margin-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.summary__item {
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.summary__q {
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.summary__badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(124, 77, 255, 0.3);
+  border: 1px solid rgba(124, 77, 255, 0.5);
+  color: #c9b8ff;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &.badge--multi {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: rgba(0, 212, 255, 0.4);
+    color: #a0eeff;
+  }
+}
+
+.summary__images {
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary__img {
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.summary__a {
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(0, 0, 0, 0.22);
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+
+  &.ok  { border-color: rgba(80, 255, 140, 0.35); background: rgba(80, 255, 140, 0.08); }
+  &.bad { border-color: rgba(255, 80, 95, 0.35);  background: rgba(255, 80, 95, 0.08);  }
+}
+
+.summary__reason {
+  margin-top: 8px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.summary__actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}

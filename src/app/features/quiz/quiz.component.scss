@@ -1,3 +1,8 @@
+// Import finish screen styles
+@import './quiz-finish.scss';
+// Import summary styles
+@import './quiz-summary.scss';
+
 :host {
   display: block;
   min-height: 100vh;
@@ -89,6 +94,10 @@
 
 .card.error { border-color: rgba(255, 80, 80, 0.35); }
 
+.end {
+  // Common styles for end screens (summary and finish)
+}
+
 .question h1 {
   margin: 0;
   font-size: 22px;
@@ -145,6 +154,18 @@
 
 @media (max-width: 720px) {
   .grid { grid-template-columns: 1fr; }
+}
+
+.grid--letters {
+  // Same as .grid for letter options
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+@media (max-width: 720px) {
+  .grid--letters { grid-template-columns: 1fr; }
 }
 
 // ── Option button ─────────────────────────────────────────────────────────────
@@ -395,174 +416,8 @@
   text-align: center;
 }
 
-// ── Summary ───────────────────────────────────────────────────────────────────
-
-.summary {
-  margin-top: 14px;
-  display: grid;
-  gap: 12px;
-}
-
-.summary__item {
-  padding: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.summary__q {
-  font-size: 14px;
-  margin-bottom: 8px;
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.summary__badge {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  padding: 2px 7px;
-  border-radius: 999px;
-  background: rgba(124, 77, 255, 0.3);
-  border: 1px solid rgba(124, 77, 255, 0.5);
-  color: #c9b8ff;
-  white-space: nowrap;
-  flex-shrink: 0;
-
-  &.badge--multi {
-    background: rgba(0, 212, 255, 0.2);
-    border-color: rgba(0, 212, 255, 0.4);
-    color: #a0eeff;
-  }
-}
-
-.summary__images {
-  margin: 8px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.summary__img {
-  max-width: 100%;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.10);
-}
-
-.summary__a {
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(0, 0, 0, 0.22);
-  display: grid;
-  gap: 6px;
-  font-size: 13px;
-
-  &.ok  { border-color: rgba(80, 255, 140, 0.35); background: rgba(80, 255, 140, 0.08); }
-  &.bad { border-color: rgba(255, 80, 95, 0.35);  background: rgba(255, 80, 95, 0.08);  }
-}
-
-.summary__reason {
-  margin-top: 8px;
-  font-size: 13px;
-  opacity: 0.9;
-}
-
-.summary__actions {
-  margin-top: 16px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
 .hint {
   margin-top: 12px;
   font-size: 13px;
   opacity: 0.7;
-}
-
-// ── Pantalla final ────────────────────────────────────────────────────────────
-
-.finish {
-  text-align: center;
-
-  &__trophy { font-size: 3rem; margin-bottom: 8px; }
-
-  &__score {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 4px;
-    margin: 20px 0 4px;
-  }
-
-  &__score-num {
-    font-size: 4rem;
-    font-weight: 800;
-    line-height: 1;
-  }
-
-  &__score-den {
-    font-size: 1.8rem;
-    font-weight: 400;
-    opacity: 0.5;
-  }
-
-  &__score-label {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    opacity: 0.6;
-    margin: 0 0 24px;
-  }
-
-  &__metrics {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin: 0 0 24px;
-  }
-
-  &__metric {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 12px;
-    padding: 14px 8px;
-
-    &--highlight {
-      background: rgba(124, 77, 255, 0.18);
-      border-color: rgba(124, 77, 255, 0.35);
-    }
-  }
-
-  &__metric-icon { font-size: 1.3rem; }
-
-  &__metric-val {
-    font-size: 1.4rem;
-    font-weight: 700;
-    line-height: 1.1;
-  }
-
-  &__metric-lbl {
-    font-size: 0.72rem;
-    opacity: 0.6;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  &__msg {
-    font-size: 0.95rem;
-    margin: 0 0 20px;
-    padding: 10px 14px;
-    border-radius: 8px;
-    background: rgba(124, 77, 255, 0.15);
-    border: 1px solid rgba(124, 77, 255, 0.3);
-  }
 }
