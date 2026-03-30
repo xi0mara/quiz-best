@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "version": "1.2.0",
+    "version": "1.3.0",
     "total_questions": 60,
     "by_type": {
       "single": 18,
@@ -81,7 +81,7 @@
       "type": "multiple",
       "question": "On a campus network, OSPF is used to implement network communication, and the link layer protocol is Ethernet. Which of the following types of packets are unicast by default?",
       "options": {
-        "A": "OLSAck packet",
+        "A": "LSAck packet",
         "B": "LSR packet",
         "C": "Hello packet",
         "D": "DD packet"
@@ -172,7 +172,7 @@
         "B": "False"
       },
       "correctAnswer": [
-        "B"
+        "A"
       ],
       "reason": "",
       "images": []
@@ -852,7 +852,7 @@
         "D": "After a confederation is configured, the original IBGP attributes can be retained."
       },
       "correctAnswer": [
-        "D"
+        "C"
       ],
       "reason": "",
       "images": []
@@ -980,8 +980,8 @@
       "options": {
         "A": "TLV",
         "B": "TVV",
-        "C": "VVL",
-        "D": "VVV"
+        "C": "ICMP",
+        "D": "HELLO"
       },
       "correctAnswer": [
         "A"
@@ -1046,7 +1046,7 @@
       "id": "Q60",
       "number": 60,
       "type": "torf",
-      "question": "On an OSPF network, one router with P2P as the network type is directly connected to another router with P2MP as the network type. If the Hello intervals on the two routers are changed to be the same, neighbor relationship establishment and LSDB synchronization are not affected.",
+      "question": "The typical characteristics of the AI era are that it focuses on data, explores data value, and improves AI effciency. Therefore, the core requirement of AI for data center networks is speed, meaning low latency.",
       "options": {
         "A": "True",
         "B": "False"
