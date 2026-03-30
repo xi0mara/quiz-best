@@ -1,7 +1,7 @@
 <div class="page">
   <header class="topbar">
     <div class="brand">Tavito ♥</div>
-    <div class="progress" *ngIf="state !== 'loading' && state !== 'error'">
+    <div class="progress" *ngIf="state !== 'loading' && state !== 'error' && state !== 'select'">
       <div class="progress__meta">
         <span>Round {{ roundNumber }} · {{ answeredQuestions }}/{{ totalQuestions }}</span>
         <span class="timer" *ngIf="state === 'playing'">⏱ {{ timeLeft }}s</span>
@@ -11,6 +11,29 @@
       </div>
     </div>
   </header>
+
+  <!-- SELECT BANK -->
+  <main class="container" *ngIf="state === 'select'">
+    <div class="card bank-select">
+      <h2 class="bank-select__title">Selecciona el banco de preguntas</h2>
+      <p class="bank-select__subtitle">¿Con cuál quieres practicar hoy?</p>
+      <div class="bank-select__grid">
+
+        <button class="bank-btn bank-btn--a" (click)="selectBank('questions.json')">
+          <span class="bank-btn__icon">📚</span>
+          <span class="bank-btn__name">Test 1</span><br>
+          <span class="bank-btn__count">500 preguntas</span>
+        </button>
+
+        <button class="bank-btn bank-btn--b" (click)="selectBank('questions_2.json')">
+          <span class="bank-btn__icon">⚡</span>
+          <span class="bank-btn__name">Test 2</span><br>
+          <span class="bank-btn__count">60 preguntas</span>
+        </button>
+
+      </div>
+    </div>
+  </main>
 
   <!-- LOADING -->
   <main class="container" *ngIf="state === 'loading'">
@@ -22,6 +45,7 @@
     <div class="card error">
       <h2>Ups</h2>
       <p>{{ errorMsg }}</p>
+      <button class="next" (click)="goToSelect()">Volver a selección</button>
     </div>
   </main>
 
@@ -202,6 +226,7 @@
           Continuar (otras {{ roundSize }})
         </button>
         <button class="ghost" (click)="restartAll()">Reiniciar todo</button>
+        <button class="ghost ghost--select" (click)="goToSelect()">Cambiar banco</button>
       </div>
 
       <p class="hint" *ngIf="answeredQuestions >= totalQuestions">
@@ -251,7 +276,10 @@
       <p class="finish__msg" *ngIf="scorePct >= 60 && scorePct < 80">👍 Buen resultado. Repasa los temas donde fallaste.</p>
       <p class="finish__msg" *ngIf="scorePct < 60">📚 Sigue practicando. ¡Puedes mejorar!</p>
 
-      <button class="next" (click)="restartAll()">Volver a empezar</button>
+      <div class="finish__actions">
+        <button class="next" (click)="restartAll()">Volver a empezar</button>
+        <button class="ghost ghost--select" (click)="goToSelect()">Cambiar banco</button>
+      </div>
 
     </div>
   </main>

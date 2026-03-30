@@ -73,90 +73,101 @@ export class QuizService {
 
   // ── Carga principal ────────────────────────────────────────────────────────
 
-  loadNormalized(
-    settings?: Partial<QuizSettings>
-  ): Observable<{ settings: QuizSettings; questions: QuizQuestion[]; meta: QuizMeta; roundConfig: RoundConfig }> {
-    const finalSettings = this.buildSettings(settings);
+loadNormalized(
+  settings?: Partial<QuizSettings>,
+  filename: string = 'questions.json'
+): Observable<{ settings: QuizSettings; questions: QuizQuestion[]; meta: QuizMeta; roundConfig: RoundConfig }> {
 
-    return this.http.get<RawJson>('questions.json').pipe(
-      map((raw) => {
-        const normalized = this.normalize(raw.questions ?? [], finalSettings);
-        return {
-          settings: finalSettings,
-          questions: normalized,
-          meta: raw.metadata,
-          roundConfig: raw.round_config,
-        };
-      })
-    );
-  }
+  const finalSettings = this.buildSettings(settings);
 
-  loadNormalizedCached(
-    settings?: Partial<QuizSettings>,
-    opts?: { force?: boolean; useLocalStorage?: boolean }
-  ): Observable<{ settings: QuizSettings; questions: QuizQuestion[]; meta: QuizMeta; roundConfig: RoundConfig }> {
-    const force          = opts?.force ?? false;
-    const useLocalStorage = opts?.useLocalStorage ?? true;
-    const finalSettings  = this.buildSettings(settings);
-
-    // 1. Caché en memoria
-    if (!force && this.cache) {
-      return of(this.applySettings(this.cache.questions, finalSettings, this.cache.meta, this.cache.roundConfig));
-    }
-
-    // 2. Caché en localStorage
-if (!force && useLocalStorage) {
-  const stored = localStorage.getItem(this.storageKey);
-  if (stored) {
-    try {
-      const parsed = JSON.parse(stored) as {
-        version: string;
-        questions: QuizQuestion[];
-        meta: QuizMeta;
-        roundConfig: RoundConfig;
+  return this.http.get<RawJson>(filename).pipe(
+    map((raw) => {
+      const normalized = this.normalize(raw.questions ?? [], finalSettings);
+      return {
+        settings: finalSettings,
+        questions: normalized,
+        meta: raw.metadata,
+        roundConfig: raw.round_config,
       };
-
-      // ── Validar versión contra el JSON del servidor ──────────
-      // Si la versión guardada coincide con la del meta, usar cache
-      // Si no, ignorar y hacer nueva petición HTTP
-      const cachedVersion = parsed.version ?? '0';
-      const serverVersion = parsed.meta?.version ?? '1.0';
-
-      if (
-        cachedVersion === serverVersion &&
-        Array.isArray(parsed.questions) &&
-        parsed.questions.length
-      ) {
-        this.cache = { settings: finalSettings, ...parsed };
-        return of(this.applySettings(parsed.questions, finalSettings, parsed.meta, parsed.roundConfig));
-      } else {
-        // Versión distinta → limpiar cache viejo
-        localStorage.removeItem(this.storageKey);
-      }
-    } catch {
-      localStorage.removeItem(this.storageKey);
-    }
-  }
+    })
+  );
 }
 
-    // 3. Petición HTTP
-    if (!force && this.inFlight$) return this.inFlight$;
+loadNormalizedCached(
+  settings?: Partial<QuizSettings>,
+  opts?: { force?: boolean; useLocalStorage?: boolean; filename?: string }
+): Observable<{ settings: QuizSettings; questions: QuizQuestion[]; meta: QuizMeta; roundConfig: RoundConfig }> {
 
-    this.inFlight$ = this.loadNormalized(finalSettings).pipe(
-      map(({ settings, questions, meta, roundConfig }) => {
-        this.cache = { settings, questions, meta, roundConfig };
+  const force           = opts?.force ?? false;
+  const useLocalStorage = opts?.useLocalStorage ?? true;
+  const file            = opts?.filename ?? 'questions.json';
 
-        if (useLocalStorage) {
-          localStorage.setItem(this.storageKey, JSON.stringify({ questions, meta, roundConfig }));
-        }
+  const finalSettings = this.buildSettings(settings);
 
-        return this.applySettings(questions, finalSettings, meta, roundConfig);
-      }),
-      shareReplay(1)
-    );
+  // 🔥 CLAVE: storage dinámico por archivo
+  const storageKey = `${this.storageKey}.${file}`;
 
-    return this.inFlight$;
+  // 1. Cache memoria
+  if (!force && this.cache) {
+    return of(this.applySettings(this.cache.questions, finalSettings, this.cache.meta, this.cache.roundConfig));
   }
+
+  // 2. localStorage
+  if (!force && useLocalStorage) {
+    const stored = localStorage.getItem(storageKey);
+
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored) as {
+          version: string;
+          questions: QuizQuestion[];
+          meta: QuizMeta;
+          roundConfig: RoundConfig;
+        };
+
+        const cachedVersion = parsed.version ?? '0';
+        const serverVersion = parsed.meta?.version ?? '1.0';
+
+        if (
+          cachedVersion === serverVersion &&
+          Array.isArray(parsed.questions) &&
+          parsed.questions.length
+        ) {
+          this.cache = { settings: finalSettings, ...parsed };
+          return of(this.applySettings(parsed.questions, finalSettings, parsed.meta, parsed.roundConfig));
+        } else {
+          localStorage.removeItem(storageKey);
+        }
+      } catch {
+        localStorage.removeItem(storageKey);
+      }
+    }
+  }
+
+  // 3. HTTP
+  if (!force && this.inFlight$) return this.inFlight$;
+
+  this.inFlight$ = this.loadNormalized(finalSettings, file).pipe(
+    map(({ settings, questions, meta, roundConfig }) => {
+
+      this.cache = { settings, questions, meta, roundConfig };
+
+      if (useLocalStorage) {
+        localStorage.setItem(storageKey, JSON.stringify({
+          version: meta.version,   // 🔥 importante guardar versión
+          questions,
+          meta,
+          roundConfig
+        }));
+      }
+
+      return this.applySettings(questions, finalSettings, meta, roundConfig);
+    }),
+    shareReplay(1)
+  );
+
+  return this.inFlight$;
+}
 
   // ── Helpers privados ───────────────────────────────────────────────────────
 

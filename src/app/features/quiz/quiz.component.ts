@@ -9,11 +9,12 @@ import {
   RoundConfig,
 } from '../../core/services/quiz.service';
 
-type State = 'loading' | 'playing' | 'answered' | 'roundSummary' | 'finished' | 'error';
+// 'select' → pantalla de selección de banco (antes de cargar nada)
+type State = 'select' | 'loading' | 'playing' | 'answered' | 'roundSummary' | 'finished' | 'error';
 
 type RoundAnswer = {
   q: QuizQuestion;
-  selectedIds: string[];      // array para soportar múltiple selección
+  selectedIds: string[];
   correctIds: string[];
   isCorrect: boolean;
   timeSpentSec: number;
@@ -27,8 +28,11 @@ type RoundAnswer = {
   styleUrl: './quiz.component.scss',
 })
 export class QuizComponent implements OnInit, OnDestroy {
-  state: State = 'loading';
+  state: State = 'select';   // ← arranca en selección, NO en loading
   errorMsg = '';
+
+  /** Archivo JSON activo. Se asigna al hacer clic en uno de los botones. */
+  selectedFile: string | null = null;
 
   settings!: QuizSettings;
   meta!: QuizMeta;
@@ -68,8 +72,6 @@ export class QuizComponent implements OnInit, OnDestroy {
   private sessionTimerSub?: Subscription;
 
   // ── Estado por pregunta ───────────────────────────────────────────────────
-  // Para single/torf: selectedIds tendrá 0 o 1 elemento
-  // Para multiple: puede tener varios
   selectedIds: string[] = [];
   isCorrect: boolean | null = null;
 
@@ -78,11 +80,44 @@ export class QuizComponent implements OnInit, OnDestroy {
   // ── Ciclo de vida ─────────────────────────────────────────────────────────
 
   ngOnInit(): void {
+    // Solo muestra la pantalla de selección; no carga nada automáticamente.
+    this.state = 'select';
+  }
+
+  ngOnDestroy(): void {
+    this.stopTimer();
+    this.stopRoundTimer();
+    this.stopSessionTimer();
+  }
+
+  // ── Selección de banco ────────────────────────────────────────────────────
+
+  /**
+   * Llamado desde el template al hacer clic en uno de los botones de banco.
+   * @param filename  'questions.json' | 'questions_2.json'
+   */
+  selectBank(filename: string): void {
+    this.selectedFile = filename;
+    this._loadBank(filename);
+  }
+
+  /** Vuelve a la pantalla de selección y limpia todo el estado. */
+  goToSelect(): void {
+    this.stopTimer();
+    this.stopRoundTimer();
+    this.stopSessionTimer();
+    this._resetState();
+    this.state = 'select';
+  }
+
+  /** Carga el banco indicado mediante el QuizService. */
+  private _loadBank(filename: string): void {
     this.state = 'loading';
+
     this.quiz
       .loadNormalizedCached(
         { timePerQuestionSec: 60, shuffleQuestions: true, shuffleOptions: true },
-        { useLocalStorage: true }
+        { useLocalStorage: true, filename }   // ← se pasa el filename al servicio
       )
       .subscribe({
         next: ({ settings, questions, meta, roundConfig }) => {
@@ -94,7 +129,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
           if (!this.totalQuestions) {
             this.state    = 'error';
-            this.errorMsg = 'No hay preguntas en public/questions.json';
+            this.errorMsg = `No hay preguntas en public/${filename}`;
             return;
           }
           this.startNewRound();
@@ -102,15 +137,9 @@ export class QuizComponent implements OnInit, OnDestroy {
         error: (err) => {
           console.error(err);
           this.state    = 'error';
-          this.errorMsg = 'No se pudo cargar questions.json.';
+          this.errorMsg = `No se pudo cargar ${filename}.`;
         },
       });
-  }
-
-  ngOnDestroy(): void {
-    this.stopTimer();
-    this.stopRoundTimer();
-    this.stopSessionTimer();
   }
 
   // ── Getters de template ───────────────────────────────────────────────────
@@ -147,26 +176,24 @@ export class QuizComponent implements OnInit, OnDestroy {
       : 0;
   }
 
-  /** Puntaje de la ronda actual (correctas en las últimas N preguntas) */
   get roundScore(): number {
     return this.roundAnswers.filter((a) => a.isCorrect).length;
   }
 
-  /** Mensaje motivacional basado en el puntaje de la ronda (sobre 60) */
   get motivationalMessage(): string {
     const score = this.roundScore;
-    if (score <= 12)       return '💪 Sigue practicando, ¡tú puedes!';
-    if (score <= 24)       return '📖 Lo estás haciendo bien, sigue estudiando, ¡tú puedes!';
-    if (score <= 30)       return '🚀 ¡Vas muy bien Tavito!';
-    return                        '🌟 ¡Excelente, bravo, eres muy inteligente!';
+    if (score <= 12) return '💪 Sigue practicando, ¡tú puedes!';
+    if (score <= 24) return '📖 Lo estás haciendo bien, sigue estudiando, ¡tú puedes!';
+    if (score <= 30) return '🚀 ¡Vas muy bien Tavito!';
+    return                  '🌟 ¡Excelente, bravo, eres muy inteligente!';
   }
 
   get motivationalClass(): string {
     const score = this.roundScore;
-    if (score <= 12)  return 'msg--low';
-    if (score <= 24)  return 'msg--mid';
-    if (score <= 30)  return 'msg--good';
-    return                   'msg--great';
+    if (score <= 12) return 'msg--low';
+    if (score <= 24) return 'msg--mid';
+    if (score <= 30) return 'msg--good';
+    return                  'msg--great';
   }
 
   formatTime(totalSec: number): string {
@@ -271,19 +298,13 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   // ── Selección de opciones ─────────────────────────────────────────────────
 
-  /**
-   * Para single/torf: selecciona y confirma de inmediato.
-   * Para multiple: toggle del checkbox, sin confirmar aún.
-   */
   toggleOption(optionId: string): void {
     if (this.state !== 'playing') return;
 
     if (!this.isMultiple) {
-      // Single / TorF → selección directa y confirmar
       this.selectedIds = [optionId];
       this.confirmAnswer();
     } else {
-      // Multiple → toggle checkbox
       const idx = this.selectedIds.indexOf(optionId);
       if (idx === -1) {
         this.selectedIds = [...this.selectedIds, optionId];
@@ -297,7 +318,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     return this.selectedIds.includes(optionId);
   }
 
-  /** Confirmar respuesta múltiple (botón "Confirmar") */
   confirmAnswer(): void {
     if (this.state !== 'playing') return;
     this.stopTimer();
@@ -305,7 +325,6 @@ export class QuizComponent implements OnInit, OnDestroy {
 
     const correctIds = this.q.correctOptionIds ?? [];
 
-    // Para múltiple: correcto solo si eligió exactamente las mismas letras
     const ok = this.isMultiple
       ? correctIds.length === this.selectedIds.length &&
         correctIds.every((id) => this.selectedIds.includes(id))
@@ -329,17 +348,15 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   optionClass(optionId: string): string {
     if (this.state === 'playing') {
-      // Durante el juego: solo marcar seleccionadas (para múltiple)
       return this.isSelected(optionId) ? 'selected' : '';
     }
 
-    // Estado answered: mostrar resultado
     const isRight    = this.q.correctOptionIds.includes(optionId);
     const isSelected = this.selectedIds.includes(optionId);
 
     if (isRight)                return 'correct';
     if (isSelected && !isRight) return 'wrong';
-    return 'dim';   // el resto se atenúa en gris
+    return 'dim';
   }
 
   // ── Navegación ────────────────────────────────────────────────────────────
@@ -362,7 +379,20 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.stopTimer();
     this.stopRoundTimer();
     this.stopSessionTimer();
+    this._resetState();
 
+    // Recarga el mismo banco que estaba activo
+    if (this.selectedFile) {
+      this._loadBank(this.selectedFile);
+    } else {
+      this.state = 'select';
+    }
+  }
+
+  // ── Helpers internos ──────────────────────────────────────────────────────
+
+  /** Limpia todo el estado de partida sin tocar `selectedFile`. */
+  private _resetState(): void {
     this.correctTotal      = 0;
     this.wrongTotal        = 0;
     this.answeredQuestions = 0;
@@ -377,8 +407,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.selectedIds       = [];
     this.isCorrect         = null;
     this.timeLeft          = 0;
-
-    this.ngOnInit();
+    this.pool              = [];
+    this.totalQuestions    = 0;
   }
 
   // ── Helpers de template ───────────────────────────────────────────────────
