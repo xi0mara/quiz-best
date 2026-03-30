@@ -1,0 +1,1061 @@
+{
+  "metadata": {
+    "version": "1.2.0",
+    "total_questions": 60,
+    "by_type": {
+      "single": 18,
+      "multiple": 22,
+      "torf": 20
+    },
+    "max_full_rounds": 1,
+    "questions_per_round": 60,
+    "changelog": [
+    ]
+  },
+  "round_config": {
+    "questions_per_round": 60,
+    "composition": {
+      "torf": 20,
+      "single": 18,
+      "multiple": 22
+    },
+    "time_per_question_seconds": 60,
+    "show_review_after_round": true,
+    "allow_repeat_across_rounds": false
+  },
+  "questions": [
+    {
+      "id": "Q1",
+      "number": 1,
+      "type": "single",
+      "question": "On Huawei switches, which of the following planes provides network information and forwarding entries that are mandatory for data plane forwarding?",
+      "options": {
+        "A": "Monitoring plane",
+        "B": "Data plane",
+        "C": "Control plane",
+        "D": "Forwarding plane"
+      },
+      "correctAnswer": [
+        "C"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q2",
+      "number": 2,
+      "type": "torf",
+      "question": "An enterprise office network runs OSPF and is divided into multiple OSPF areas. Enterprise network engineers can configure route summarization on ASBRs to reduce the number of inter-area Type 3 LSAs, which in turn reduces the routing table size and improves device resource utilization.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": [
+      ]
+    },
+    {
+      "id": "Q3",
+      "number": 3,
+      "type": "multiple",
+      "question": "Depending on the type of algorithms used, routing protocols are classified into distance-vector protocols and link-state protocols. Which of the following routing protocols are link-state protocols?",
+      "options": {
+        "A": "OSPF",
+        "B": "RIP",
+        "C": "IS-IS",
+        "D": "BGP"
+      },
+      "correctAnswer": [
+        "A",
+        "C"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q4",
+      "number": 4,
+      "type": "multiple",
+      "question": "On a campus network, OSPF is used to implement network communication, and the link layer protocol is Ethernet. Which of the following types of packets are unicast by default?",
+      "options": {
+        "A": "OLSAck packet",
+        "B": "LSR packet",
+        "C": "Hello packet",
+        "D": "DD packet"
+      },
+      "correctAnswer": [
+        "B",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q5",
+      "number": 5,
+      "type": "torf",
+      "question": "The typical characteristics of the AI era are that it focuses on data, explores data value, and improves AI efficiency. Therefore, the core requirement of AI for data center networks is speed, meaning low latency.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q6",
+      "number": 6,
+      "type": "single",
+      "question": "Which of the following fields in DD packets is used for implicit acknowledgment to ensure the reliability and integrity of DD packet transmission on an OSPF network?",
+      "options": {
+        "A": "MS",
+        "B": "I",
+        "C": "M",
+        "D": "DD sequence number"
+      },
+      "correctAnswer": [
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q7",
+      "number": 7,
+      "type": "single",
+      "question": "The following figure shows the OSPF network of an enterprise and the OSPF configurations of R1. Which of the following statements is false about the network?",
+      "options": {
+        "A": "R2 can access the server.",
+        "B": "The network segment to which GE 0/0/1 of R1 belongs cannot be advertised.",
+        "C": "GE 0/0/1 of R1 cannot send OSPF packets.",
+        "D": "GE 0/0/1 of R1 cannot accept OSPF packets."
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": [
+        {
+          "file": "Q9_img1.png",
+          "path": "assets/images_1/Q9_img1.png"
+        }
+      ]
+    },
+    {
+      "id": "Q8",
+      "number": 8,
+      "type": "torf",
+      "question": "On a WLAN, engineers can use the VLAN pool mechanism to assign access users to different VLANs, which helps reduce the number of broadcast domains and improve network performance.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q9",
+      "number": 9,
+      "type": "torf",
+      "question": "Roaming technology is typically used on a large WLAN to ensure that STA services are not interrupted when STAs move between coverage areas of different APs.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q10",
+      "number": 10,
+      "type": "torf",
+      "question": "iMaster NCE-Campus can be used as an authentication server on a WLAN to authenticate STAs.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q11",
+      "number": 11,
+      "type": "torf",
+      "question": "When DHCP snooping is configured on a device, if the number of users to go online exceeds the maximum number of DHCP snooping binding entries supported by the device, the excess users cannot go online.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q12",
+      "number": 12,
+      "type": "multiple",
+      "question": "Which of the following statements are false about VRRP timers?",
+      "options": {
+        "A": "The default interval for sending VRRP Advertisement packets is 2s.",
+        "B": "By default, the VRRP preemption delay is 1s.",
+        "C": "Skew Time = (255 - Priority)/255",
+        "D": "Master_Down = (3 x Adver_Interval) + Skew_Time"
+      },
+      "correctAnswer": [
+        "A",
+        "B",
+        "C"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q13",
+      "number": 13,
+      "type": "multiple",
+      "question": "The BFD Echo function checks the connectivity of the forwarding link by looping back packets. Which of the following statements are true about this function?",
+      "options": {
+        "A": "If URPF is enabled on the peer end, BFD packets may be incorrectly discarded on the peer end.",
+        "B": "When configuring a BFD session supporting the BFD echo function, you need to configure both the local and remote discriminators.",
+        "C": "The BFD Echo function applies only to single-hop BFD sessions.",
+        "D": "In the BFD Echo function, the device uses the IP address of the outbound interface as the source IP address by default."
+      },
+      "correctAnswer": [
+        "A",
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q14",
+      "number": 14,
+      "type": "torf",
+      "question": "In VRRP networking, the source IP address in the ARP aging probe packet sent by a VRRP device is the interface IP address, not the virtual IP address.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q15",
+      "number": 15,
+      "type": "multiple",
+      "question": "VRRP has two versions: VRRPv2 and VRRPv3. Which of the following statements are true about VRRPv3?",
+      "options": {
+        "A": "VRRPv3 is applicable to both IPv4 and IPv6.",
+        "B": "The default device priority is 100.",
+        "C": "VRRPv3 supports authentication.",
+        "D": "By default, VRRP Advertisement packets are sent at an interval of 1 second."
+      },
+      "correctAnswer": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q16",
+      "number": 16,
+      "type": "multiple",
+      "question": "On an OSPF network, different device roles generate different types of LSAs that vary in function. Which of the following types of LSAs cannot be generated by a pure ASBR?",
+      "options": {
+        "A": "Type 4 LSA",
+        "B": "Type 2 LSA",
+        "C": "Type 7 LSA",
+        "D": "Type 3 LSA"
+      },
+      "correctAnswer": [
+        "A",
+        "B",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q17",
+      "number": 17,
+      "type": "multiple",
+      "question": "OSPF networks are classified into four types of networks by link layer protocol. Which of the following types of networks do not require DR/BDR election?",
+      "options": {
+        "A": "NBMA",
+        "B": "Broadcast",
+        "C": "P2MP",
+        "D": "P2P"
+      },
+      "correctAnswer": [
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q18",
+      "number": 18,
+      "type": "multiple",
+      "question": "On an OSPF network, there are multiple types of packets, each with a different function. Which of the following are the main functions of Hello packets?",
+      "options": {
+        "A": "Neighbor relationship maintenance",
+        "B": "Neighbor deletion",
+        "C": "Neighbor discovery",
+        "D": "Neighbor relationship establishment"
+      },
+      "correctAnswer": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q19",
+      "number": 19,
+      "type": "multiple",
+      "question": "On an office network of an enterprise, OSPF is enabled on two directly connected routers. During adjacency establishment, the state machine stays in the 2-way state. Which of the following statements are not possible causes?",
+      "options": {
+        "A": "The N-bit and E-bit of Hello packets are the same.",
+        "B": "Hello time values are different.",
+        "C": "Router IDs conflict.",
+        "D": "Area IDs are different."
+      },
+      "correctAnswer": [
+        "B",
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q20",
+      "number": 20,
+      "type": "multiple",
+      "question": "In addition to numerous normal service packets, the CPUs of devices on a network may also receive large numbers of attack packets. To ensure that the CPUs can properly respond to normal services, the devices provide the local attack defense function. Which of the following statements are true about this function?",
+      "options": {
+        "A": "CPU attack defense can also take effect on the management interface of the device.",
+        "B": "Regardless of the packet type, the same rate limit must be set to reduce the number of packets sent to the CPU.",
+        "C": "The device can schedule the protocol packets to be sent to the CPU in the attack defense policy based on the protocol priorities so that the packets with higher priorities are processed preferentially.",
+        "D": "To ensure that session-based application-layer data runs properly during an attack, you can configure the dynamic link protection function."
+      },
+      "correctAnswer": [
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q21",
+      "number": 21,
+      "type": "torf",
+      "question": "To reduce the workload of configuring VPN instances, the administrator can import interface IP addresses and features to the device in batches using a script, and then manually bind the interfaces to VPN instances.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q22",
+      "number": 22,
+      "type": "single",
+      "question": "The main objective of security policies is to reduce the intrusion success rate and detect attackers. To ensure that detection and prevention are performed throughout the attack lifecycle, a series of plans need to be made. Which of the following statements is false about security policy planning?",
+      "options": {
+        "A": "If possible, do not reference the content security profile in all security policy rules whose action is permit, so as to facilitate quick check.",
+        "B": "Files with unknown threats can be sent to the sandbox for inspection. The firewall periodically reads the inspection result from the sandbox and blocks subsequent traffic based on the inspection result.",
+        "C": "To further reduce the attack surface, enable URL filtering and file blocking on the basis of the security policy that permits an application, so as to prevent users from accessing high-risk websites and downloading high-risk files.",
+        "D": "Before setting security policies, the administrator must fully understand the applications, users, and contents on the network. This is necessary for properly setting security policies so that the firewall can check the corresponding user traffic."
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q23",
+      "number": 23,
+      "type": "multiple",
+      "question": "A session is an entry used to record the connection status of a protocol, and is fundamental for the firewall to forward packets. Which of the following protocol packets will the firewall create sessions for?",
+      "options": {
+        "A": "TCP",
+        "B": "Subsequent fragment",
+        "C": "ICMP error packet",
+        "D": "GRE"
+      },
+      "correctAnswer": [
+        "A",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q24",
+      "number": 24,
+      "type": "torf",
+      "question": "The IPsec SA is fundamental to IPsec. It is used to establish a security channel for IKE SA negotiation. However, it is a unidirectional logical connection. Therefore, in the case of bidirectional communication between two IPsec peers, at least two SAs must be established to safeguard data flows in both directions.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q25",
+      "number": 25,
+      "type": "single",
+      "question": "CPU attack defense uses a multi-level security mechanism to implement hierarchical device protection. Match the following levels with the corresponding protection functions.",
+      "options": {
+        "A": "D, A, C, B",
+        "B": "A, B, C, D",
+        "C": "A, C, D, B",
+        "D": "B, D, A, C"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": [
+        {
+          "file": "Q28_img1.png",
+          "path": "assets/images_1/Q28_img1.png"
+        }
+      ]
+    },
+    {
+      "id": "Q26",
+      "number": 26,
+      "type": "multiple",
+      "question": "The Neighbor Discovery Protocol (NDP) is an important basic protocol in the IPv6 protocol suite and plays an important role. Which of the following functions and features does it support?",
+      "options": {
+        "A": "Redirection",
+        "B": "Neighbor state tracing",
+        "C": "Address resolution",
+        "D": "Duplicate address detection"
+      },
+      "correctAnswer": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q27",
+      "number": 27,
+      "type": "torf",
+      "question": "On an OSPF network, one router with P2P as the network type is directly connected to another router with P2MP as the network type. If the Hello intervals on the two routers are changed to be the same, neighbor relationship establishment and LSDB synchronization are not affected.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q28",
+      "number": 28,
+      "type": "torf",
+      "question": "In IPv6, interface IDs can be manually configured, automatically generated by the system, or generated based on the IEEE EUI-64 standard.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q29",
+      "number": 29,
+      "type": "torf",
+      "question": "Multicast devices do not independently maintain unicast routing information on the network. The devices must perform RPF checks on the received packets according to the unicast routing information on the network before creating PIM routing entries. If there is no unicast route to a specific destination, the RPF check fails.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q30",
+      "number": 30,
+      "type": "single",
+      "question": "In an IPv4 address space, Class D addresses are used for multicast. Which of the following is the permanent group address range reserved for routing protocols?",
+      "options": {
+        "A": "232.0.0.0 to 232.255.255.255",
+        "B": "224.0.0.0 to 224.0.0.255",
+        "C": "224.0.1.0 to 231.255.255.255",
+        "D": "239.0.0.0 to 239.255.255.255"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q31",
+      "number": 31,
+      "type": "multiple",
+      "question": "During routine O&M, the administrator of an enterprise checks the IGMP configuration on a router interface. The configuration is as follows:",
+      "options": {
+        "A": "The maximum response time to Query messages is 10s.",
+        "B": "The interval for sending Group-Specific Query messages is 60s.",
+        "C": "The IP address of the interface is 192.168.1.1.",
+        "D": "The IGMP version is IGMPv2."
+      },
+      "correctAnswer": [
+        "A",
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": [
+        {
+          "file": "Q34_img1.png",
+          "path": "assets/images_1/Q34_img1.png"
+        }
+      ]
+    },
+    {
+      "id": "Q32",
+      "number": 32,
+      "type": "single",
+      "question": "When IPv4 multicast packets are transmitted over Ethernet, their destination MAC address is also a multicast MAC address. If the IP address of a multicast group is 224.0.1.1, which of the following is the corresponding multicast MAC address?",
+      "options": {
+        "A": "01-00-5e-00-01-00",
+        "B": "01-00-5e-00-01-01",
+        "C": "01-00-5e-01-01-01",
+        "D": "01-00-5e-01-01-00"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q33",
+      "number": 33,
+      "type": "multiple",
+      "question": "Which of the following statements are true about IP multicast service models?",
+      "options": {
+        "A": "In the SSM model, an (S, G) entry is generated for each source-group pair.",
+        "B": "In the SSM model, different multicast applications on the same source can use the same SSM group.",
+        "C": "Multicast service models differ for receiver hosts but do not affect multicast sources.",
+        "D": "In the ASM model, an ASM group can be used by only one multicast application."
+      },
+      "correctAnswer": [
+        "A",
+        "C"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q34",
+      "number": 34,
+      "type": "multiple",
+      "question": "On an RSTP network, port roles are optimized to overcome the disadvantages of STP. Which of the following port roles are supported in RSTP?",
+      "options": {
+        "A": "Alternate port",
+        "B": "Backup port",
+        "C": "Designated port",
+        "D": "Root port"
+      },
+      "correctAnswer": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q35",
+      "number": 35,
+      "type": "multiple",
+      "question": "Which of the following parameters are compared during designated port election on an STP network?",
+      "options": {
+        "A": "RPC",
+        "B": "Local BID and local PID",
+        "C": "Peer BID",
+        "D": "Peer PID and local PID"
+      },
+      "correctAnswer": [
+        "A",
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q36",
+      "number": 36,
+      "type": "torf",
+      "question": "On an STP network, parameters used for role election, such as the root bridge ID, root path cost, and bridge ID, are all fields in BPDUs.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q37",
+      "number": 37,
+      "type": "single",
+      "question": "In an MST region, MSTP independently calculates an MSTI for each VLAN based on mappings between VLANs and MSTIs. Which of the following statements is false about the characteristics of MSTIs?",
+      "options": {
+        "A": "A port must have the same spanning tree parameter settings for different MSTIs.",
+        "B": "Each MSTI sends BPDUs only on its own spanning tree.",
+        "C": "The spanning tree calculation method of each MSTI is similar to that in STP.",
+        "D": "Spanning trees of MSTIs can have different roots and topologies."
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q38",
+      "number": 38,
+      "type": "torf",
+      "question": "On an OSPF or IS-IS network, the filter-policy import command can be run on a router to filter out the LSAs forwarded by its neighbors.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q39",
+      "number": 39,
+      "type": "single",
+      "question": "As shown in the figure, R1 imports the direct route 10.1.1.0/24 to OSPF. An engineer enables bidirectional route re-advertisement on R2 and R3, and configures the following commands on R3. After the network becomes stable, which of the following is the Pre value of the route 10.1.1.0/24 in the routing table of R4?",
+      "options": {
+        "A": "15",
+        "B": "16",
+        "C": "17",
+        "D": "18"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": [
+        {
+          "file": "Q42_img1.png",
+          "path": "assets/images_1/Q42_img1.png"
+        }
+      ]
+    },
+    {
+      "id": "Q40",
+      "number": 40,
+      "type": "single",
+      "question": "PBR is a mechanism for selecting routes based on user-defined policies. There are two types of PBR: interface-based PBR and local PBR. Which of the following statements is false about these two types of PBR?",
+      "options": {
+        "A": "Interface-based PBR is configured on an interface and takes effect only for incoming packets on the interface.",
+        "B": "Local PBR takes effect only for locally originated packets.",
+        "C": "Interface-based PBR takes effect only for forwarded packets.",
+        "D": "Local PBR is configured in the protocol view."
+      },
+      "correctAnswer": [
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q41",
+      "number": 41,
+      "type": "torf",
+      "question": "When configuring an ACL on a router, you can identify the ACL by number or name. When configuring a named ACL, you need to manually specify a name and a number for the ACL.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q42",
+      "number": 42,
+      "type": "torf",
+      "question": "On a Huawei router, if no ACL is configured or an ACL is configured but no ACL rule is configured, the ACL matching result is Unmatched.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q43",
+      "number": 43,
+      "type": "single",
+      "question": "ACLs are a common tool for matching routes. ACLs are classified into multiple types based on ACL rule functions. An ACL can be identified by a number, and the number range for each type of ACL is different. Which of the following types of ACLs are numbered from 4000 to 4999?",
+      "options": {
+        "A": "User-defined ACL",
+        "B": "Layer 2 ACL",
+        "C": "Basic ACL",
+        "D": "Advanced ACL"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q44",
+      "number": 44,
+      "type": "multiple",
+      "question": "In addition to a route reflector, the confederation is another method that reduces the number of IBGP connections in an AS. Which of the following statements are true about the confederation technology?",
+      "options": {
+        "A": "This technology is applicable to large-scale networks.",
+        "B": "All member devices in a confederation need to be reconfigured.",
+        "C": "The logical topology does not need to be changed when a confederation is used.",
+        "D": "Special EBGP connections are established among sub-ASs in a confederation, and the sub-ASs need to be fully meshed."
+      },
+      "correctAnswer": [
+        "A",
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q45",
+      "number": 45,
+      "type": "torf",
+      "question": "In BGP, the MED attribute is transmitted only between two neighboring ASs. The AS that receives the MED attribute does not advertise it to a third AS. By default, a router compares only the MED values of BGP routes from the same neighboring AS. That is, if two routes to the same destination are from different neighboring ASs, the router does not compare the MED values of the two routes.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q46",
+      "number": 46,
+      "type": "multiple",
+      "question": "When a BGP device sends an Open message to establish a peer connection, which of the following information is carried?",
+      "options": {
+        "A": "NLRI",
+        "B": "Router ID",
+        "C": "Local AS number",
+        "D": "Hold time"
+      },
+      "correctAnswer": [
+        "B",
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q47",
+      "number": 47,
+      "type": "torf",
+      "question": "When BGP receives multiple routes to the same destination, it selects the optimal route based on route selection rules. As a result, load balancing cannot be implemented.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q48",
+      "number": 48,
+      "type": "single",
+      "question": "BGP confederations are widely used because they can reduce the number of IBGP connections in an AS. Which of the following statements is false about confederations?",
+      "options": {
+        "A": "The ASs outside a confederation still consider the confederation as one AS.",
+        "B": "After a confederation is configured, the original AS number is used as the confederation ID of each router.",
+        "C": "A confederation divides an AS into several sub-ASs, and EBGP full-mesh connections are established in each sub-AS.",
+        "D": "After a confederation is configured, the original IBGP attributes can be retained."
+      },
+      "correctAnswer": [
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q49",
+      "number": 49,
+      "type": "torf",
+      "question": "When a router running BGP is in the Connect state, BGP starts the ConnectRetry timer and waits for a TCP connection to be established. If BGP does not receive any response from a BGP peer throughout the ConnectRetry timer, BGP attempts to establish TCP connections with other BGP peers and remains in the Connect state.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q50",
+      "number": 50,
+      "type": "torf",
+      "question": "The AS_Path attribute records the numbers of all ASs that a route passes through from the local end to the destination in the vector order. If a BGP speaker advertises a route to an IBGP peer, it creates an empty AS_Path in an Open message. This prevents routing loops between ASs.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q51",
+      "number": 51,
+      "type": "multiple",
+      "question": "BGP itself does not discover routes. Therefore, other routes need to be imported to the BGP routing table for route exchanges between ASs. In import mode, routes are imported to the BGP routing table by protocol. Which of the following routes can be imported to the BGP routing table using the import mode?",
+      "options": {
+        "A": "Direct routes",
+        "B": "Static routes",
+        "C": "IS-IS routes",
+        "D": "OSPF routes"
+      },
+      "correctAnswer": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q52",
+      "number": 52,
+      "type": "torf",
+      "question": "By default, if no router ID is configured but multiple loopback interface addresses are configured, BGP selects the largest loopback interface address as the router ID.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q53",
+      "number": 53,
+      "type": "single",
+      "question": "During routine O&M, an engineer finds that the Hold Time parameters of two devices are inconsistent. In this case, which of the following situations occurs?",
+      "options": {
+        "A": "A peer relationship can be established, and the devices use their own parameter values to send messages.",
+        "B": "No peer relationship can be established.",
+        "C": "A peer relationship can be established, and the larger Hold Time is selected after negotiation.",
+        "D": "A peer relationship can be established, and the smaller Hold Time is selected after negotiation."
+      },
+      "correctAnswer": [
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q54",
+      "number": 54,
+      "type": "multiple",
+      "question": "In which of the following scenarios can a neighbor relationship not be established between two directly connected Huawei routers after IS-IS is configured?",
+      "options": {
+        "A": "One router is a Level-1 router, and the other router is a Level-2 router.",
+        "B": "The two routers are Level-1 routers and have different area addresses.",
+        "C": "The two routers are Level-2 routers and have different area addresses.",
+        "D": "The two routers are Level-2 routers with the same area address, and the interfaces connecting them are on the same network segment."
+      },
+      "correctAnswer": [
+        "A",
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q55",
+      "number": 55,
+      "type": "torf",
+      "question": "On an IS-IS network, areas are divided by router, and a router can belong to only one area. Therefore, an IS-IS router only needs to maintain the LSDB of its area.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "B"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q56",
+      "number": 56,
+      "type": "single",
+      "question": "Compared with OSPF, IS-IS has higher scalability because IS-IS uses the ___________ structure to construct packets. (Enter the acronym in uppercase.)",
+      "options": {
+        "A": "TLV",
+        "B": "TVV",
+        "C": "VVL",
+        "D": "VVV"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "esta es una clave que se debe digitar en mayúscula, la pregunta es para completar",
+      "images": []
+    },
+    {
+      "id": "Q57",
+      "number": 57,
+      "type": "single",
+      "question": "IS-IS has multiple types of packets, each with different functions. Which of the following types of packets is used to establish and maintain neighbor relationships?",
+      "options": {
+        "A": "IIH",
+        "B": "CSNP",
+        "C": "PSNP",
+        "D": "LSP"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q58",
+      "number": 58,
+      "type": "multiple",
+      "question": "On a broadcast network, IS-IS elects a DIS, and OSPF elects a DR. Which of the following statements are true about the differences between a DIS and a DR?",
+      "options": {
+        "A": "The DIS and DR provide different functions. The DIS is mainly used to create and update pseudonodes.",
+        "B": "Adjacency establishment in a DIS scenario is different from that in a DR scenario. In IS-IS, adjacencies are also established between non-DIS routers.",
+        "C": "The DIS and DR are elected according to different rules. In DIS election, devices first compare priorities and then IP addresses. In DR election, devices first compare IP addresses and then priorities.",
+        "D": "DIS election and DR election take place at different times. The DIS is elected after an adjacency is established."
+      },
+      "correctAnswer": [
+        "A",
+        "B",
+        "D"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q59",
+      "number": 59,
+      "type": "single",
+      "question": "Which of the following statements is false about BFD?",
+      "options": {
+        "A": "In demand mode, after a BFD session is set up, the system does not periodically send BFD Control packets.",
+        "B": "The asynchronous mode does not support the echo function.",
+        "C": "The asynchronous mode is the primary BFD operating mode.",
+        "D": "In asynchronous mode, two systems periodically exchange BFD Control packets at the negotiated interval. If one system does not receive any BFD Control packets from the other within the detection interval, the BFD session is declared down."
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    },
+    {
+      "id": "Q60",
+      "number": 60,
+      "type": "torf",
+      "question": "On an OSPF network, one router with P2P as the network type is directly connected to another router with P2MP as the network type. If the Hello intervals on the two routers are changed to be the same, neighbor relationship establishment and LSDB synchronization are not affected.",
+      "options": {
+        "A": "True",
+        "B": "False"
+      },
+      "correctAnswer": [
+        "A"
+      ],
+      "reason": "",
+      "images": []
+    }
+  ]
+}
